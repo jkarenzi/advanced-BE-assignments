@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Residence Management System</title>
+</head>
+<body>
+    <h1>University Residence Management System</h1>
+    <script src="oop.js"></script>
+    <script>
+        // Creating instances of DormRoom and Apartment
+        const dormRoom1 = new DormRoom("Dorm A", "123 University St", 200);
+        const dormRoom2 = new DormRoom("Dorm B", "124 University St", 150);
+        const apartment1 = new Apartment("Apartment A", "456 University St", 3);
+        const apartment2 = new Apartment("Apartment B", "457 University St", 2);
+
+        // Displaying created residences
+        console.log("Created Residences:");
+        console.log(dormRoom1);
+        console.log(dormRoom2);
+        console.log(apartment1);
+        console.log(apartment2);
+
+        // Creating instances of students
+        const student1 = new Student("John Doe", "S12345", "Male");
+        const student2 = new Student("Jane Smith", "S12346", "Female");
+
+        // Assigning residences to students
+        student1.assignResidence(dormRoom1);
+        student2.assignResidence(apartment1);
+
+        // Displaying students and their assigned residences
+        console.log("Students and their assigned residences:");
+        console.log(`Student: ${student1.name}, Residence: ${student1.residence.name}, Address: ${student1.residence.address}`);
+        console.log(`Student: ${student2.name}, Residence: ${student2.residence.name}, Address: ${student2.residence.address}`);
+
+        // Removing a residence from a student
+        student1.removeResidence();
+        console.log(`After removing residence, Student: ${student1.name}, Residence: ${student1.residence}`);
+
+        // Creating a maintenance request
+        const maintenanceRequest1 = new MaintenanceRequest("Leaking faucet in the kitchen", "submitted", student2);
+
+        // Assigning an employee to the maintenance request
+        maintenanceRequest1.assignEmployee("Employee1");
+
+        // Updating the status of the maintenance request
+        maintenanceRequest1.updateStatus("in progress");
+
+        // Displaying maintenance request details
+        console.log("Maintenance Request Details:");
+        console.log(`Description: ${maintenanceRequest1.description}`);
+        console.log(`Status: ${maintenanceRequest1.status}`);
+        console.log(`Submitted by: ${maintenanceRequest1.student.name}`);
+        console.log(`Assigned Employee: ${maintenanceRequest1.employee}`);
+    </script>
+</body>
+</html>

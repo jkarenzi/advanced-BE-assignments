@@ -1,73 +1,64 @@
+// Base class for all types of residences
 class Residence {
-    constructor(id, name, address, isOccupied) {
-        if (new.target === Residence) {
-            throw new TypeError("Cannot construct Abstract instances directly");
-        }
-        this.id = id;
+    constructor(name, address, isOccupied = false) {
         this.name = name;
         this.address = address;
         this.isOccupied = isOccupied;
     }
 }
-  
-// Dorm room
+
+// Class for dorm rooms, inherits from Residence
 class DormRoom extends Residence {
-    constructor(id, name, address, isOccupied, squareFootage) {
-      super(id, name, address, isOccupied);
-      this.squareFootage = squareFootage;
+    constructor(name, address, size, isOccupied = false) {
+        super(name, address, isOccupied);
+        this.size = size; // size in square footage
     }
 }
 
-// apartment
+// Class for apartments, inherits from Residence
 class Apartment extends Residence {
-    constructor(id, name, address, isOccupied, numberOfBedrooms) {
-      super(id, name, address, isOccupied);
-      this.numberOfBedrooms = numberOfBedrooms;
+    constructor(name, address, bedrooms, isOccupied = false) {
+        super(name, address, isOccupied);
+        this.bedrooms = bedrooms; // number of bedrooms
     }
 }
 
-  // student
+// Class for students
 class Student {
-constructor(id, name, studentID, gender, residence) {
-    this.id = id;
-    this.name = name;
-    this.studentID = studentID;
-    this.gender = gender;
-    this.residence = residence;
-}
+    constructor(name, studentID, gender, residence = null) {
+        this.name = name;
+        this.studentID = studentID;
+        this.gender = gender;
+        this.residence = residence; // reference to assigned residence
+    }
+
+    assignResidence(residence) {
+        this.residence = residence;
+        residence.isOccupied = true;
+    }
+
+    removeResidence() {
+        if (this.residence) {
+            this.residence.isOccupied = false;
+            this.residence = null;
+        }
+    }
 }
 
-//maintenance request
+// Class for maintenance requests
 class MaintenanceRequest {
-    constructor(id, description, status, student, assignedEmployee) {
-      this.id = id;
-      this.description = description;
-      this.status = status; // 'submitted' | 'in progress' | 'completed'
-      this.student = student;
-      this.assignedEmployee = assignedEmployee;
+    constructor(description, status = 'submitted', student, employee = null) {
+        this.description = description;
+        this.status = status; // submitted, in progress, completed
+        this.student = student; // reference to the student who submitted the request
+        this.employee = employee; // reference to the assigned employee
     }
-  }
-  
-// employee  
-  class Employee {
-    constructor(id, name) {
-      this.id = id;
-      this.name = name;
+
+    assignEmployee(employee) {
+        this.employee = employee;
     }
-  }
 
-const dorm = new DormRoom(1, "Dorm A", "123 University St", false, 300);
-const apartment = new Apartment(2, "Apartment B", "456 University Ave", true, 3);
-const student = new Student(1, "John Doe", "S123456", "Male", dorm);
-const employee = new Employee(1, "Jane Smith");
-
-const maintenanceRequest = new MaintenanceRequest(1, "Fix the heater", "submitted", student, employee);
-
-console.log(dorm);
-console.log(apartment);
-console.log(student);
-console.log(employee);
-console.log(maintenanceRequest);
-  
-  
-  
+    updateStatus(status) {
+        this.status = status;
+    }
+}
